@@ -1,0 +1,7 @@
+{
+  "name": "PrexChallenge",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
