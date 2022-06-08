@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div>
+          <ion-avatar>
+            <img src="https://viajes.nationalgeographic.com.es/medio/2019/03/29/torre-eiffel-hoy_f7a97d88_1200x1821.jpg" />
+          </ion-avatar>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-card>
+          <ion-input type="text" placeholder="Username" required #email ></ion-input>
+          <ion-input type="password" placeholder="Password" required #password ></ion-input>
+          <button type="submit" (click)="onRegister( email, password)">
+            Sign Up
+          </button>
+      </ion-card>
+    </ion-row>
+    <ion-row ngClass="footer-row">
+      <ion-col>
+          <a href="/login">
+            <button ngClass="footerButton">
+              Already have an account? Sign in!
+            </button>
+          </a>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
