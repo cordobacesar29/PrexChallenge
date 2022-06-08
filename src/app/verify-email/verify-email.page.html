@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Verification</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <h2>Thank you for Registering!</h2>
+        <p>We have sent a confirmation email.</p>
+        <p>Please check your email and click on the link to verify your email address.</p>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col>
+        <button type="submit" (click)="onSendEmail()">
+          Resend
+        </button>
+      </ion-col>
+      <ion-col>
+        <a href="/login">
+          <button ngClass="footerButton">
+            Inicio
+          </button>
+        </a>
+    </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

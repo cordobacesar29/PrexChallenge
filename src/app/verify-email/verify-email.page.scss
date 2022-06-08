@@ -1,0 +1,24 @@
+ion-title {
+  color: rgb(231, 255, 92);
+}
+ion-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+}
+button {
+  width: 100%;
+  border-radius: 100px;
+  background-color: rgb(231, 255, 92);
+  color: #000;
+  padding: 10px;
+  margin-top: 1rem;
+}
+.footerButton {
+  background-color: #000;
+  color: rgb(231, 255, 92);
+}
