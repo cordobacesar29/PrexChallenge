@@ -11,7 +11,10 @@ export const environment = {
     storageBucket: 'atygg-4c1f0.appspot.com',
     messagingSenderId: '941570010600',
     appId: '1:941570010600:web:8a01a319b21653c200885d'
-  }
+  },
+  apiURL: 'https://movies-app1.p.rapidapi.com/api/movies',
+  apiKey: '6d0bb87c34mshca665b5ea621c41p1bf664jsnc3fe61e4c135',
+  apiHost: 'movies-app1.p.rapidapi.com',
 };
 
 /*
