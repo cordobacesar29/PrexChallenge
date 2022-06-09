@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { MoviesPageRoutingModule } from './movies-routing.module';
+import { StarComponent } from '../components/star/star.component';
 
 import { MoviesPage } from './movies.page';
 
@@ -15,6 +16,9 @@ import { MoviesPage } from './movies.page';
     IonicModule,
     MoviesPageRoutingModule
   ],
-  declarations: [MoviesPage]
+  declarations: [
+    MoviesPage,
+    StarComponent
+  ]
 })
 export class MoviesPageModule {}
