@@ -5,9 +5,9 @@
     </ion-buttons>
     <ion-item>
       <ion-avatar slot="end">
-        <img src="./avatar.svg" />
+        <img src={{userImg}} />
       </ion-avatar>
-      <ion-label>Lorem ipsum</ion-label>
+      <ion-label>{{userName}}</ion-label>
     </ion-item>
   </ion-toolbar>
 </ion-header>
@@ -18,21 +18,44 @@
   </ion-header>
   <ion-list>
     <ion-card *ngFor="let movie of movies">
-      <img src="./madison.jpg" />
-      <ion-card-header>
-        <ion-card-subtitle>{{movie.year}}</ion-card-subtitle>
-        <ion-card-title>{{movie.title}}</ion-card-title>
-      </ion-card-header>
       <ion-card-content>
-        {{movie.actors}}
+        <ion-row>
+          <ion-col>
+            <ion-row><ion-img [src]="movie.image"></ion-img></ion-row>
+            <ion-row ngClass="stars">
+              <ion-col *ngFor="let star of stars">
+                <app-star 
+                  [starId]="star" 
+                  [rating]="hoverState || rating" 
+                  (enter)="enter($event)" 
+                  (leave)="leave()" 
+                  (bigClick)="updateRating(star)"
+                >
+                </app-star>
+              </ion-col>
+            </ion-row>
+            
+            
+          </ion-col>
+          <ion-col ngClass="text-column">
+            <ion-row>
+              <ion-card-title>{{movie.titleOriginal}}</ion-card-title>
+            </ion-row>
+            <ion-row ngClass="description"><ion-label>{{movie.description}}</ion-label></ion-row>
+            <ion-row ngClass="card-button">
+              <button>Add favorite</button>
+              <button>Edit</button>
+            </ion-row>
+          </ion-col>
+        </ion-row>
       </ion-card-content>
     </ion-card>
   </ion-list>
-
+  
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+    loadingSpinner="bubbles"
+    loadingText="Loading more data...">
+  </ion-infinite-scroll-content>
+</ion-infinite-scroll>
 </ion-content>
