@@ -74,7 +74,7 @@ export class AuthService {
       window.alert(error.message);
     }
   }
-
+  // Sign up with email/password
   async register(email: string, password: string): Promise<User> {
     try {
       const {user} = await this.afAuth.createUserWithEmailAndPassword(email, password);
@@ -84,7 +84,7 @@ export class AuthService {
       window.alert(error.message);
     }
   }
-
+  // Reset Forgot Password
   async resetPassword(email: string): Promise<void> {
     try {
       return await this.afAuth.sendPasswordResetEmail(email);
@@ -102,7 +102,7 @@ export class AuthService {
       window.alert(error.message);
     }
   }
-
+  // Verify Email
   isEmailVerified(user: User): boolean {
     return user.emailVerified === true ? true : false;
   }
