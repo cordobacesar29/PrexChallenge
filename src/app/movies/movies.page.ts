@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { MoviesApiService } from '../services/movies-api.service';
+import { AuthService } from '../services/auth.service';
+import { Movie } from '../shared/movie.interface';
+import { NgxStarRatingComponent } from 'ngx-star-rating';
 
 @Component({
   selector: 'app-movies',
@@ -8,40 +12,34 @@ import { IonInfiniteScroll } from '@ionic/angular';
 })
 export class MoviesPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-  public movies = [
-    {
-      id: '1',
-      title: 'The Shawshank Redemption',
-      year: '1994',
-      rating: '9.2',
-      runtime: '142 min',
-      genre: 'Drama',
-      director: 'Frank Darabont',
-      actors: 'Tim Robbins, Morgan Freeman, Bob Gunton, William Sadler',
-      url: 'https://www.youtube.com/watch?v=6hB3S9bIaco',
-    },
-    {
-      id: '2',
-      title: 'The Godfather',
-      year: '1972',
-      rating: '9.2',
-      runtime: '175 min',
-      genre: 'Drama',
-      director: 'Francis Ford Coppola',
-      actors: 'Marlon Brando, Al Pacino, James Caan, Diane Keaton',
-      url: 'https://www.youtube.com/watch?v=sY1S34973zA',
-    },
-  ];
-  constructor() { }
+  movies: Movie[] = [];
+  userName: string;
+  userImg: string;
+  title = 'star-angular';
+  stars = [1, 2, 3, 4, 5];
+  rating = 0;
+  hoverState = 0;
+  constructor(
+    private moviesApiService: MoviesApiService,
+    private authSvc: AuthService
+  ) { }
+
+  async getMovies() {
+    try {
+      const response = await this.moviesApiService.getMovies();
+      this.movies = response;
+      console.log(this.movies);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   loadData(event) {
     setTimeout(() => {
-      console.log('Done');
       event.target.complete();
-
       // App logic to determine if all data is loaded
       // and disable the infinite scroll
-      if (this.movies.length === 50) {
+      if (this.movies.length === 10) {
         event.target.disabled = true;
       }
     }, 500);
@@ -51,7 +49,28 @@ export class MoviesPage implements OnInit {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   };
 
+  async getUserName() {
+    this.userName = await this.authSvc.userData.displayName;
+    this.userImg = await this.authSvc.userData.photoURL;
+  }
+
+  enter(i) {
+    this.hoverState = i;
+  }
+
+  leave() {
+    this.hoverState = 0;
+  }
+
+  updateRating(i) {
+    this.rating = i;
+  }
+
   ngOnInit() {
+    this.getMovies();
+    setTimeout(() => {
+      this.getUserName();
+    }, 3000);
   }
 
 }
