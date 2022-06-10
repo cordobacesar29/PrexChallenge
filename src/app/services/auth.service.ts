@@ -2,10 +2,11 @@ import { Injectable, NgZone } from '@angular/core';
 import { User } from '../shared/user.interface';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider } from 'firebase/auth';
-import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { AlertController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,9 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth, // Inject Firebase auth service
     private angularFirestore: AngularFirestore,
-    public ngZone: NgZone // NgZone service to remove outside scope warning
+    public ngZone: NgZone, // NgZone service to remove outside scope warning
+    public alertController: AlertController,
+    public loadingController: LoadingController
   ) {
     this.user$ = this.afAuth.authState.pipe(
       switchMap((user) => {
@@ -46,10 +49,11 @@ export class AuthService {
   // Sign out
   async logout(): Promise<void> {
     try {
+      await this.presentLoading();
       await this.afAuth.signOut();
       localStorage.removeItem('user');
     } catch (error) {
-      window.alert(error.message);
+      this.presentAlert(error.message);
     }
   }
 
@@ -58,9 +62,10 @@ export class AuthService {
     try {
       const {user} = await this.afAuth.signInWithEmailAndPassword(email, password);
       await this.updateUserData(user);
+      await this.presentLoading();
       return user;
     } catch (error) {
-      window.alert(error.message);
+      this.presentAlert(error.message);
     }
   }
 
@@ -69,9 +74,10 @@ export class AuthService {
     try {
       const {user} = await this.afAuth.signInWithPopup(new GoogleAuthProvider());
       await this.updateUserData(user);
+      await this.presentLoading();
       return user;
     } catch (error) {
-      window.alert(error.message);
+      this.presentAlert(error.message);
     }
   }
   // Sign up with email/password
@@ -79,9 +85,11 @@ export class AuthService {
     try {
       const {user} = await this.afAuth.createUserWithEmailAndPassword(email, password);
       await this.sendVerificationEmail();
+      await this.presentLoading();
       return user;
     } catch (error) {
-      window.alert(error.message);
+      this.presentAlert(error.message);
+      console.log(error.message);
     }
   }
   // Reset Forgot Password
@@ -89,7 +97,7 @@ export class AuthService {
     try {
       return await this.afAuth.sendPasswordResetEmail(email);
     } catch (error) {
-      window.alert(error.message);
+      this.presentAlert(error.message);
     }
   }
 
@@ -99,12 +107,31 @@ export class AuthService {
       const currentUser = await this.afAuth.currentUser;
       return currentUser.sendEmailVerification();
     } catch (error) {
-      window.alert(error.message);
+      this.presentAlert(error.message);
     }
   }
   // Verify Email
   isEmailVerified(user: User): boolean {
     return user.emailVerified === true ? true : false;
+  }
+  // Alert
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      message,
+      buttons: ['OK']
+    });
+    await alert.present();
+  }
+  //loading component
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+      duration: 2000
+    });
+    await loading.present();
   }
 
   private updateUserData(user: User): Promise<void> {
