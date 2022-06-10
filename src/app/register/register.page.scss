@@ -1,5 +1,5 @@
 ion-title {
-  color: rgb(231, 255, 92);
+  color: rgb(75, 151, 145);
 }
 ion-grid {
   display: flex;
@@ -13,32 +13,27 @@ ion-grid {
 ion-input {
   margin-bottom: .5rem;
   border-radius: 25px;
-  border: 1px solid #ccc;
   text-align: center;
-}
-ion-card {
-  background-color: #000;
+  border: 1px solid rgb(15, 255, 235);
 }
 button {
   width: 100%;
   border-radius: 100px;
-  background-color: rgb(231, 255, 92);
+  background-color: rgb(15, 255, 235);
   color: #000;
   padding: 10px;
   margin-top: 1rem;
 }
 .googleButton {
-  background-color: #000;
-  color: rgb(231, 255, 92);
-  border: 1px solid rgb(231, 255, 92);
+  color: #000;
+  border: 1px solid rgb(15, 255, 235);
 }
 .footerButton {
-  background-color: #000;
-  color: rgb(231, 255, 92);
+  color: #000;
 }
 .footer-row {
   width: 100%;
 }
 ion-avatar {
-  border: 2px solid rgb(231, 255, 92);
+  border: 2px solid rgb(15, 255, 235);
 }
