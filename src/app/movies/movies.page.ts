@@ -28,7 +28,6 @@ export class MoviesPage implements OnInit {
     try {
       const response = await this.moviesApiService.getMovies();
       this.movies = response;
-      console.log(this.movies);
     } catch (error) {
       console.log(error);
     }
