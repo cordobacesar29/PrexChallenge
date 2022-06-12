@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 import { environment } from 'src/environments/environment';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoviesApiService {
-  movies: any[] = [];
 
   private options = {
     method: 'GET',
@@ -19,8 +19,8 @@ export class MoviesApiService {
     }
   };
 
-  constructor() { }
-
+  constructor(public db: AngularFirestore) { }
+  // get movies from api
   async getMovies(): Promise<any> {
     try {
       const response = await axios(this.options);
@@ -28,5 +28,31 @@ export class MoviesApiService {
     } catch (error) {
       console.log(error);
     }
+  }
+  // add doc to firebase
+  addDocument(data: any, path: string, id: string){
+    const collection = this.db.collection(path);
+    return collection.doc(id).set(data);
+  }
+  // get doc from firebase
+  getDocument(path: string, id: string){
+    const collection = this.db.collection(path);
+    return collection.doc(id).valueChanges();
+  }
+  // delete doc from firebase
+  deleteDocument(path: string, id: string){
+    const collection = this.db.collection(path);
+    return collection.doc(id).delete();
+  }
+  // update doc in firebase
+  updateDocument(path: string, id: string, data: any){
+    const collection = this.db.collection(path);
+    return collection.doc(id).update(data);
+  }
+  // get all docs from firebase
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  getCollection<tipo>(path: string){
+    const collection = this.db.collection<tipo>(path);
+    return collection.valueChanges();
   }
 }
