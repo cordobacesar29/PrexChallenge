@@ -1,0 +1,26 @@
+<ion-content>
+  <ion-title></ion-title>
+  <ion-card>
+    <ion-col ngClass="text-column">
+      <ion-row>
+        <ion-input placeholder="Title" #movieTitle></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-input placeholder="Description" #movieDescription></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-input placeholder="URL imagen" #movieURLImage></ion-input>
+      </ion-row>
+      <ion-row>
+          <ion-col>
+            <ion-label>Rate:</ion-label>
+            <ion-select>
+              <ion-select-option *ngFor="let star of stars" [value]="star" onselect="star" #rating>{{star}}</ion-select-option>
+            </ion-select>
+          </ion-col>   
+      </ion-row>
+      <button (click)="dismiss()">dismiss</button>
+      <button (click)="addMovie(movieTitle, movieDescription, movieURLImage, rating)">Create</button>
+    </ion-col>
+  </ion-card>
+</ion-content>
