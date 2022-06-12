@@ -29,7 +29,6 @@ export class AuthService {
         return of(null);
       })
     );
-
      /* Saving user data in localstorage when
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe((user) => {
@@ -45,7 +44,6 @@ export class AuthService {
       }
     });
   }
-
   // Sign out
   async logout(): Promise<void> {
     try {
@@ -56,7 +54,6 @@ export class AuthService {
       this.presentAlert(error.message);
     }
   }
-
   // Sign in with email/password
   async login(email: string, password: string): Promise<User> {
     try {
@@ -68,7 +65,6 @@ export class AuthService {
       this.presentAlert(error.message);
     }
   }
-
   // Sign in with Google
   async loginWithGoogle(): Promise<User> {
     try {
@@ -89,7 +85,6 @@ export class AuthService {
       return user;
     } catch (error) {
       this.presentAlert(error.message);
-      console.log(error.message);
     }
   }
   // Reset Forgot Password
@@ -100,7 +95,6 @@ export class AuthService {
       this.presentAlert(error.message);
     }
   }
-
   // Send email verfificaiton when new user sign up
   async sendVerificationEmail(): Promise<void> {
     try {
@@ -134,7 +128,7 @@ export class AuthService {
     await loading.present();
   }
 
-  private updateUserData(user: User): Promise<void> {
+private updateUserData(user: User): Promise<void> {
     const userRef: AngularFirestoreDocument<User> = this.angularFirestore.doc(`users/${user.uid}`);
     const data: User = {
       uid: user.uid,
@@ -144,5 +138,4 @@ export class AuthService {
     };
     return userRef.set(data, {merge: true});
   }
-
 }
