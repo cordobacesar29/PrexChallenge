@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { MoviesApiService } from 'src/app/services/movies-api.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-movie-form',
@@ -27,7 +28,16 @@ export class MovieFormComponent implements OnInit {
     };
     // eslint-disable-next-line no-underscore-dangle
     await this.moviesApiService.addDocument(movie, 'movies', movie._id);
-    this.dismiss();
+    Swal.fire({
+      title: 'Added movie',
+      icon: 'success',
+      timer: 1500,
+      showConfirmButton: false,
+      heightAuto: false,
+    });
+    setTimeout(() => {
+      this.dismiss();
+    }, 1500);
   }
 
   dismiss() {
