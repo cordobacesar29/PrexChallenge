@@ -1,0 +1,20 @@
+<ion-content>
+  <ion-header>
+    <ion-title>Create a new movie</ion-title>
+  </ion-header>
+  <ion-card>
+    <ion-col ngClass="text-column">
+      <ion-row>
+        <ion-input placeholder="Title" #movieTitle ></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-input placeholder="Description" #movieDescription ></ion-input>
+      </ion-row>
+      <ion-row>
+        <ion-input placeholder="URL imagen" #movieURLImage></ion-input>
+      </ion-row>
+      <button (click)="dismiss()">dismiss</button>
+      <button (click)="editMovie(movieTitle, movieDescription, movieURLImage, movie._id)">Save</button>
+    </ion-col>
+  </ion-card>
+</ion-content>
