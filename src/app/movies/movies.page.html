@@ -13,7 +13,7 @@
               <ion-col *ngFor="let star of stars">
                 <app-star 
                   [starId]="star" 
-                  [rating]="hoverState || rating" 
+                  [rating]="hoverState || movie.rating" 
                   (enter)="enter($event)" 
                   (leave)="leave()" 
                   (bigClick)="updateRating(star)"
