@@ -1,9 +1,28 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>favorites</ion-title>
+    <a href="/movies">Back</a>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <ion-list>
+    <ion-card *ngFor="let movie of moviesFav">
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <ion-row><ion-img [src]="movie.image"></ion-img></ion-row>          
+          </ion-col>
+          <ion-col ngClass="text-column">
+            <ion-row>
+              <ion-card-title>{{movie.titleOriginal}}</ion-card-title>
+            </ion-row>
+            <ion-row ngClass="description"><ion-label>{{movie.description}}</ion-label></ion-row>
+            <ion-row ngClass="card-button">
+              <ion-icon name="trash-outline" (click)="deleteFavorite(movie)"></ion-icon>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>
