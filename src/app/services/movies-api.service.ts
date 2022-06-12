@@ -20,15 +20,6 @@ export class MoviesApiService {
   };
 
   constructor(public db: AngularFirestore) { }
-  // get movies from api
-  async getMovies(): Promise<any> {
-    try {
-      const response = await axios(this.options);
-      return response.data.results;
-    } catch (error) {
-      console.log(error);
-    }
-  }
   // add doc to firebase
   addDocument(data: any, path: string, id: string){
     const collection = this.db.collection(path);
