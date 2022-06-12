@@ -1,8 +1,8 @@
 export interface Movie {
-  _id: string;
+  _id: any;
   titleOriginal: string;
   year: string;
-  rating: string;
+  rating: any;
   description: string;
   image: string;
 }
