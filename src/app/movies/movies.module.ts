@@ -10,7 +10,7 @@ import { StarComponent } from '../components/star/star.component';
 import { MoviesPage } from './movies.page';
 import { HeaderComponent } from '../components/header/header.component';
 import { MovieFormComponent } from '../components/movie-form/movie-form.component';
-
+import { EditFormComponent } from '../components/edit-form/edit-form.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,7 +22,8 @@ import { MovieFormComponent } from '../components/movie-form/movie-form.componen
     MoviesPage,
     StarComponent,
     HeaderComponent,
-    MovieFormComponent
+    MovieFormComponent,
+    EditFormComponent
   ]
 })
 export class MoviesPageModule {}
