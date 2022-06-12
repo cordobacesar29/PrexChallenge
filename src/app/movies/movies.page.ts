@@ -4,6 +4,8 @@ import { MovieFormComponent } from '../components/movie-form/movie-form.componen
 import { AuthService } from '../services/auth.service';
 import { MoviesApiService } from '../services/movies-api.service';
 import { Movie } from '../shared/movie.interface';
+import Swal from 'sweetalert2';
+import { EditFormComponent } from '../components/edit-form/edit-form.component';
 
 @Component({
   selector: 'app-movies',
@@ -11,6 +13,9 @@ import { Movie } from '../shared/movie.interface';
   styleUrls: ['./movies.page.scss'],
 })
 export class MoviesPage implements OnInit {
+  @Input() movieTitle: string;
+  @Input() movieDescription: string;
+  @Input() movieUrl: string;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   newMovie: Movie = {
     titleOriginal: '',
@@ -32,19 +37,6 @@ export class MoviesPage implements OnInit {
     public modalController: ModalController,
     private auth: AuthService
   ) { }
-  // save movies from api to firebase db
-  async saveMovies() {
-    try {
-      const response = await this.moviesApiService.getMovies();
-      const movies = response;
-      for(const movie of movies) {
-        // eslint-disable-next-line no-underscore-dangle
-        await this.moviesApiService.addDocument(movie, 'movies', movie._id);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
   // get movies from firebase db
   getMovies() {
     this.moviesApiService.getCollection<Movie>('movies').subscribe(movies => {
@@ -55,6 +47,13 @@ export class MoviesPage implements OnInit {
   addFavorite(movie: any) {
     // eslint-disable-next-line no-underscore-dangle
     this.moviesApiService.addDocument(movie, 'favorites', movie._id);
+    Swal.fire({
+      title: 'Added to favorites',
+      icon: 'success',
+      timer: 1500,
+      showConfirmButton: false,
+      heightAuto: false,
+    });
   }
   // load data
   loadData(event) {
@@ -93,19 +92,17 @@ export class MoviesPage implements OnInit {
   // edit movie
   async editMovie(movie: Movie) {
     const modal = await this.modalController.create({
-      component: MovieFormComponent,
+      component: EditFormComponent,
       cssClass: 'my-custom-class',
       componentProps: {
         movie
       }
     });
-    console.log(movie);
     return await modal.present();
   }
 
   ngOnInit() {
-    this.saveMovies();
-    this.getMovies();
     this.auth.presentLoading();
+    this.getMovies();
   }
 }
